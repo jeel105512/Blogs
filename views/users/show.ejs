@@ -1,0 +1,19 @@
+<%- include("../shared/_header") %>
+
+    <div class="container mt-5">
+        <h1>User Profile</h1>
+        <hr class="my-5">
+        <% if(typeof user !==undefined) { %>
+            <a href="/users/<%= user.id %>/edit">Edit user</a>
+            <div>
+                <div>
+                    <p>
+                        <%= user.firstName %> <%= user.lastName %>
+                    </p>
+                </div>
+            </div>
+            <a href="/users">Back to users</a>
+        <% } %>
+    </div>
+
+    <%- include("../shared/_footer") %>

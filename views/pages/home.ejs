@@ -1,0 +1,288 @@
+<%- include("../shared/_header") %>
+
+  <header id="header">
+    <div class="header-top">
+      <h1>Content Management Systems (CMS)</h1>
+      <p>Biganners guide for dummies (if you can read and are interested in reading this!) A MAN...</p>
+    </div>
+    <div class="introduction">
+      <h5>Introduction</h5>
+      <p>A Content Management System (CMS) is a software application or set of programs that enable the creation,
+        management, and organization of digital content. CMS is particularly useful for websites, blogs, and
+        other online platforms where content needs to be regularly updated and maintained. It provides an
+        intuitive and user-friendly interface, allowing individuals or teams to manage digital content without
+        extensive technical expertise.</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="content-container">
+      <nav class="content-container-nav">
+        <button class="content-container-nav-button" data-content="keyFeatures">Key Features</button>
+        <button class="content-container-nav-button" data-content="popularCMSPlatforms">Popular CMS
+          Platforms</button>
+        <button class="content-container-nav-button" data-content="gettingStartedWithCMS">Getting Started with
+          CMS</button>
+      </nav>
+      <div class="content">
+        <h2>Key Features...</h2>
+        <div>
+          <h5>1. Content Creation and Editing</h5>
+          <p>CMS allows users to create, edit, and publish digital content seamlessly. The content creation
+            process is often similar to using word processing software, making it accessible to users with
+            varying technical backgrounds.</p>
+        </div>
+
+        <div>
+          <h5>2. Content Organization</h5>
+          <p>CMS provides a structured approach to organizing content. Users can categorize and tag content,
+            making it easier to manage and navigate, especially on websites with a large volume of
+            information.
+          </p>
+        </div>
+
+        <div>
+          <h5>3. Version Control</h5>
+          <p>CMS often includes version control features, allowing users to track changes made to content over
+            time. This is essential for collaboration and ensures that previous versions can be restored if
+            needed.</p>
+        </div>
+
+        <div>
+          <h5>4. User Permissions</h5>
+          <p>To facilitate collaboration, CMS platforms offer role-based access control. Different users can
+            have
+            varying levels of access and permissions, ensuring that only authorized individuals can make
+            specific changes.</p>
+        </div>
+
+        <div>
+          <h5>5. Templates and Themes</h5>
+          <p>Many CMS platforms support templates and themes, allowing users to customize the appearance of
+            their
+            websites without delving into complex coding. This is beneficial for individuals or
+            organizations
+            with limited web development skills.</p>
+        </div>
+
+        <div>
+          <h5>6. Workflow Management</h5>
+          <p>In larger organizations, CMS often includes workflow management features. This ensures that
+            content
+            goes through a defined review and approval process before being published, maintaining quality
+            and
+            consistency.</p>
+        </div>
+
+        <div>
+          <h5>7. Plugins and Extensions</h5>
+          <p>CMS platforms support plugins or extensions, additional pieces of software that extend
+            functionality.
+            This allows users to add features based on their specific needs, enhancing the capabilities of
+            the
+            CMS.</p>
+        </div>
+
+        <div>
+          <h5>8. SEO-Friendly</h5>
+          <p>Modern CMS platforms are designed to be search engine optimization (SEO) friendly. This helps in
+            improving the visibility of content on search engines, ensuring that it reaches a wider
+            audience.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      <h5>Conclusion</h5>
+      <p>In summary, a Content Management System simplifies the process of creating, managing, and organizing
+        digital content. Whether you are running a personal blog, a business website, or an e-commerce platform,
+        choosing the right CMS can significantly contribute to the efficiency and success of your online
+        presence. Explore the various features and platforms available to find the one that best suits your
+        needs.</p>
+    </div>
+
+    <div class="latest-created-question-card">
+      <p>I know you might have gotten bored after reading all these things. Below is an example of how the content
+        might get displayed using CMS which uses Node.js, Express.js, and mongoose.</p>
+      <% if(typeof latestQuestionCard !==undefined) { %>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-front">
+              <p class="card-front-subtitle">This is the latest created Question Card!!!</p>
+              <h3 class="card-front-title">QUESTION?</h3>
+            </div>
+            <div class="card-back">
+              <p class="card-back-body">
+                
+              </p>
+            </div>
+          </div>
+        </div>
+        <% } %>
+    </div>
+
+    <div class="code-examples">
+      <h2>Code Example...</h2>
+
+      <div>
+        <h3>1. Setup Project:</h3>
+        <p>Create a new Node.js project and install necessary packages:</p>
+      </div>
+      <pre>
+          <code>
+  npm init -y
+  npm install express mongoose body-parser                    
+          </code>
+      </pre>
+
+      <div>
+        <h3>2. Create Express App:</h3>
+        <p>Create an "app.js" file:</p>
+      </div>
+      <pre>
+          <code>
+  const express = require('express');
+  const mongoose = require('mongoose');
+  const bodyParser = require('body-parser');
+
+  const app = express();
+  const PORT = process.env.PORT || 3000;
+
+  // Body parser middleware
+  app.use(bodyParser.json());
+
+  // MongoDB connection
+  mongoose.connect('mongodb://localhost:27017/cms', { useNewUrlParser: true, useUnifiedTopology: true });
+  const db = mongoose.connection;
+
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  db.once('open', () => {
+  console.log('Connected to MongoDB');
+  });
+
+  // Define routes
+  app.get('/', (req, res) => {
+  res.send('Hello, this is your CMS homepage!');
+  });
+
+  // Start server
+  app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  });
+          </code>
+      </pre>
+
+      <div>
+        <h3>3. Define Mongoose Model:</h3>
+        <p>Create a "models/post.js" file:</p>
+      </div>
+      <pre>
+          <code>
+  const mongoose = require('mongoose');
+
+  const postSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+  });
+
+  const Post = mongoose.model('Post', postSchema);
+
+  module.exports = Post;
+          </code>
+      </pre>
+
+      <div>
+        <h3>4. Create Routes for CRUD Operations:</h3>
+        <p>Update "app.js" to include routes for creating, reading, updating, and deleting posts:</p>
+      </div>
+      <pre>
+          <code>
+  const express = require('express');
+  const mongoose = require('mongoose');
+  const bodyParser = require('body-parser');
+  const Post = require('./models/post');
+
+  const app = express();
+  const PORT = process.env.PORT || 3000;
+
+  // ... (previous code)
+
+  // Create a new post
+  app.post('/posts', async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const newPost = new Post({ title, content });
+    const savedPost = await newPost.save();
+    res.json(savedPost);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  });
+
+  // Get all posts
+  app.get('/posts', async (req, res) => {
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  });
+
+  // Update a post
+  app.put('/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const updatedPost = await Post.findByIdAndUpdate(id, { title, content }, { new: true });
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  });
+
+  // Delete a post
+  app.delete('/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedPost = await Post.findByIdAndDelete(id);
+    res.json(deletedPost);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  });
+
+  // ... (remaining code)
+          </code>
+      </pre>
+    </div>
+
+    <div class="latest-updated-question-card">
+      <p>I know I know... this is the end of this page and you can go to sleep after looking at this cool card
+        effect once more.</p>
+      <% if(typeof latestUpdatedQuestionCard !==undefined) { %>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-front">
+              <p class="card-front-subtitle">This is the latest updated Question Card!!!</p>
+              <h3 class="card-front-title">QUESTION?</h3>
+            </div>
+            <div class="card-back">
+              <p class="card-back-body">
+                
+              </p>
+            </div>
+          </div>
+        </div>
+        <% } %>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <h3>Adios Amigos</h3>
+    <p>sigining off Jh.Patel.</p>
+  </footer>
+
+  <%- include("../shared/_footer") %>

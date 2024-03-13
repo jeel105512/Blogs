@@ -1,0 +1,37 @@
+<%- include("../shared/_header") %>
+
+    <div class="container mt-5">
+
+        <h3>Users List</h3>
+        <a href="/users/new" class="create-new-user">Create New User</a>
+        
+        <div class="users-container">
+            <% if(typeof users !=="undefined" && users.length> 0) { %>
+                <% users.forEach(({ id, firstName, lastName, nickName, email, avatar, updatedAt })=> { %>
+                    <div class="user-card">
+                        <div class="user-card-info">
+                            <div class="user-card-info-avatar">
+                                <img src="<%= avatar %>" alt="">
+                            </div>
+                            <div class="user-card-info-names">
+                                <p><%= nickName %></p>
+                                <p><%= firstName %> <%= lastName %></p>
+                                <p><%= email %></p>
+                            </div>
+                        </div>
+                        <div class="user-card-action">
+                            <a href="/users/<%= id %>" class="user-card-action-show"><i class="fa-solid fa-user"></i></a>
+                            <a href="/users/<%= id %>/edit" class="user-card-action-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="/users/<%= id %>" method="post" class="user-card-action-delete-form"
+                                onsubmit="return confirm('Are you sure you want to permanantly delete this card?')">
+                                <input type="hidden" name="_method" value="delete">
+                                <button class="standard-link" type="submit"><i class="fa-solid fa-trash user-card-action-delete"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include("../shared/_footer") %>
