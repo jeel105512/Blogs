@@ -36,6 +36,7 @@ app.set("view engine", "ejs");
 // for static files like css or js
 app.use(express.static("public"));
 app.use(express.static("avatars"));
+app.use(express.static("posts"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -1,0 +1,41 @@
+<%- include("../shared/_header") %>
+
+    <div class="container mt-5">
+
+        <h1>Post List</h1>
+        <hr class="my-5">
+        <a href="/posts/new">Create New Post</a>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Content</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(typeof posts !== "undefined" && posts.length > 0) { %>
+                    <% posts.forEach(({ id, title, image, content, updatedAt }) => { %>
+                        <tr>
+                            <td><%= title %></td>
+                            <td><img src="<%= image %>" alt=""></td>
+                            <td><%= content %></td>
+                            <td><%= updatedAt %></td>
+                            <td>
+                                <a href="/posts/<%= id %>">View</a>
+                                <a href="/posts/<%= id %>/edit">Edit</a>
+                                <form action="/posts/<%= id %>" method="post" onsubmit="return confirm('Are you sure you want to permanantly delete this post?')">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button class="standard-link" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+<%- include("../shared/_footer") %>

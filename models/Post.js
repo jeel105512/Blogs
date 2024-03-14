@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema(
   {
-    userId: {
-      type: String,
-      required: [true, "user-id is required"],
-    },
     title: {
       type: String,
       required: [true, "post must have a title"],
