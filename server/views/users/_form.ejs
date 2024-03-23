@@ -6,6 +6,7 @@
     let email = "";
     let avatar = "";
     let userRole = "";
+    let subscriber = "checked";
     let method = "post";
 
     if (typeof user !== "undefined") {
@@ -15,6 +16,7 @@
         nickname = user.nickname;
         email = user.email;
         avatar = user.avatar;
+        subscriber = user.subscriber;
         userRole = user.role;
         method = "put";
     }
@@ -51,6 +53,11 @@
     <div class="mb-3">
         <label for="avatar" class="form-label">Avatar:</label>
         <input type="file" class="form-control" id="avatar" name="avatar" value="<%= avatar %>">
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="subscriber" name="subscriber" <%= subscriber ? 'checked' : '' %>>
+        <label class="form-check-label" for="subscriber">Subscribe to stay up to date</label>
     </div>
 
     <% if (isAuthenticated) { %>

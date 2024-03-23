@@ -51,6 +51,11 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       required: false,
     },
+    subscriber: {
+      type: Boolean,
+      default: true,
+      require: false,
+    },
   },
   {
     // Include timestamps for when the document was created and updated

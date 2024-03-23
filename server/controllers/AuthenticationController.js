@@ -122,7 +122,7 @@ export const isAuthenticated = (req, res, next) => {
 // Check if the user has a specific role
 export const isRole = (role) => {
   return (req, res, next) => {
-    if (!req.isAuthenticated) {
+    if (!req.isAuthenticated()) {
       // Check if user is not authenticated
       req.status = 401; // Unauthorized status code
 

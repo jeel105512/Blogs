@@ -83,10 +83,10 @@ export const edit = async (req, res, next) => {
 export const create = async (req, res, next) => {
     try {
         // Extract and validate user input from the request
-        const { firstName, lastName, nickname, email, password, avatar, role } = getStrongParams(req);
+        const { firstName, lastName, nickname, email, password, avatar, subscriber, role } = getStrongParams(req);
 
         // Create a new User instance with the provided data
-        const user = new User({ firstName, lastName, nickname, email, role });
+        const user = new User({ firstName, lastName, nickname, email, subscriber, role });
 
         // Validate user data and check for errors
         const validationErrors = user.validateSync();
@@ -138,7 +138,7 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
     try {
         // Extract and validate user input from the request
-        const { firstName, lastName, nickname, email, password, avatar, role } = getStrongParams(req);
+        const { firstName, lastName, nickname, email, password, avatar, subscriber, role } = getStrongParams(req);
 
         // Find and verify a user based on the provided request parameters
         let user = await findAndVerifyUser(req);
@@ -148,6 +148,7 @@ export const update = async (req, res, next) => {
         user.lastName = lastName;
         user.nickname = nickname;
         user.email = email;
+        user.subscriber = subscriber;
         user.role = role;
 
         // Validate user data and check for errors
@@ -260,5 +261,7 @@ function getStrongParams(req) {
     // Extract approved fields from the request body
     const { id, firstName, lastName, nickname, email, avatar, password, role } = req.body;
 
-    return { id, firstName, lastName, nickname, email, avatar, password, role };
+    const subscriber = req.body.subscriber === 'on';
+
+    return { id, firstName, lastName, nickname, email, avatar, password, subscriber, role };
 }

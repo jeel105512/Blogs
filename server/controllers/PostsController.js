@@ -1,9 +1,29 @@
 import fs from "fs";
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+
 import Post from "../models/Post.js";
+import User from "../models/User.js";
+
+dotenv.config();
+
+// email transporter for password reset
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL, // this will be from when you send the emails
+    pass: process.env.PASS,
+  },
+});
+
+// Render the login page
+export const login = (_, res) => {
+  res.render("authentication/login");
+};
 
 const permanentStorage = "postsImages";
 
-async function findAndVarifyUser(req) {
+async function findAndVarifyPost(req) {
   const post = await Post.findById(req.params.id);
 
   if (!post) {
@@ -49,7 +69,7 @@ export const index = async (_, res, next) => {
 
 export const show = async (req, res, next) => {
   try {
-    const post = await findAndVarifyUser(req);
+    const post = await findAndVarifyPost(req);
 
     res.format({
       "text/html": () => {
@@ -79,7 +99,7 @@ export const add = async (_, res, next) => {
 
 export const edit = async (req, res, next) => {
   try {
-    const post = await findAndVarifyUser(req);
+    const post = await findAndVarifyPost(req);
 
     res.render("posts/edit", {
       post,
@@ -123,6 +143,26 @@ export const create = async (req, res, next) => {
 
     await post.save();
 
+    // email all the subscribers
+    const users = await User.find({ subscriber: true });
+    
+    for (const user of users) {
+      try {
+        await transporter.sendMail({
+          to: user.email,
+          from: process.env.EMAIL,
+          subject: `A Special New Blog For ${user.firstName}: ${post.title}`,
+          html: `
+            <p>There is a new Blog posted by your favorite blogger.</p>
+            <p>View the new Blog Post titled <a href="http://localhost:${process.env.PORT}/posts/${post.id}">${post.title}</a>.</p>
+            `,
+        });
+      } catch (error) {
+        console.error(`Error sending email to ${user.email}: ${error.message}`);
+        // Handle error appropriately, such as logging it
+      }
+    }
+
     res.redirect("/posts");
   } catch (error) {
     next(error);
@@ -133,7 +173,7 @@ export const update = async (req, res, next) => {
   try {
     const { title, image, content } = getStrongParams(req);
 
-    const post = await findAndVarifyUser(req);
+    const post = await findAndVarifyPost(req);
 
     post.title = title;
     post.content = content;
@@ -173,7 +213,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const post = await findAndVarifyUser(req);
+    const post = await findAndVarifyPost(req);
 
     const filepath = `${permanentStorage}/${post.image}`;
 
