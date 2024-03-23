@@ -4,6 +4,7 @@ import UserRoutes from "../routes/UserRoutes.js";
 import AuthenticationRoutes from "../routes/AuthenticationRoutes.js";
 import ApplicationRoutes from "../routes/ApplicationRoutes.js";
 import APIRoutes from "../routes/APIRoutes.js";
+import PostRoutes from "../routes/PostRoutes.js";
 
 export default (app) => {
     // Registering our PageRoutes as middleware
@@ -23,4 +24,7 @@ export default (app) => {
 
     // API available endpoints
     app.use("/api", APIRoutes);
+    
+    // Posts routes
+    app.use("/posts", PostRoutes);
 };

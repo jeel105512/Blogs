@@ -1,5 +1,14 @@
 import { requestToken } from "../controllers/ApplicationController.js";
-import { login, authenticate, logout, isAuthenticated } from "../controllers/AuthenticationController.js";
+import {
+  login,
+  authenticate,
+  logout,
+  isAuthenticated,
+  getForgotPassword,
+  postForgotPassword,
+  getResetPassword,
+  postResetPassword,
+} from "../controllers/AuthenticationController.js";
 import { add } from "../controllers/UsersController.js";
 import { Router } from "express";
 
@@ -23,6 +32,15 @@ router.get("/register", add);
 
 // Route for application api authentication
 router.post("/request-token", requestToken);
+
+// Password reset functionality
+router.get("/forgot-password", getForgotPassword);
+
+router.post("/forgot-password", postForgotPassword);
+
+router.get("/reset-password/:token", getResetPassword);
+
+router.post("/reset-password", postResetPassword);
 
 // Export the router for use in other parts of the application
 export default router;
