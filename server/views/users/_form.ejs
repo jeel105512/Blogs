@@ -5,6 +5,7 @@
     let nickname = "";
     let email = "";
     let avatar = "";
+    let userRole = "";
     let method = "post";
 
     if (typeof user !== "undefined") {
@@ -14,6 +15,7 @@
         nickname = user.nickname;
         email = user.email;
         avatar = user.avatar;
+        userRole = user.role;
         method = "put";
     }
 %>
@@ -50,6 +52,21 @@
         <label for="avatar" class="form-label">Avatar:</label>
         <input type="file" class="form-control" id="avatar" name="avatar" value="<%= avatar %>">
     </div>
+
+    <% if (isAuthenticated) { %>
+        <% if (isAdmin) { %>    
+            <div class="mb-3">
+                <label for="role" class="form-label">Role:</label>
+                <select id="role" name="role" class="form-select" required>
+                    <% userRoles.forEach(function(role) { %>
+                        <option value="<%= role %>" <%= role === userRole ? "selected" : "" %>>
+                        <%= role %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div> 
+        <% } %>
+    <% } %>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

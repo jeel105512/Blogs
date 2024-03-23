@@ -3,6 +3,7 @@ import fs from "fs";
 
 const temporaryStorage = process.env.TEMP_FILE_STORAGE || "temp";
 const permanentStorage = "avatars";
+const userRoles = User.schema.path("role").enumValues;
 
 // Function to display a list of Users (admin access only)
 export const index = async (_, res, next) => {
@@ -53,6 +54,7 @@ export const add = async (_, res, next) => {
         res.render("users/add", {
             formType: "create",
             title: "New User",
+            userRoles,
         });
     } catch (error) {
         next(error);
@@ -70,6 +72,7 @@ export const edit = async (req, res, next) => {
             user,
             formType: "update",
             title: "Edit User",
+            userRoles,
         });
     } catch (error) {
         next(error);
@@ -80,10 +83,10 @@ export const edit = async (req, res, next) => {
 export const create = async (req, res, next) => {
     try {
         // Extract and validate user input from the request
-        const { firstName, lastName, nickname, email, password, avatar } = getStrongParams(req);
+        const { firstName, lastName, nickname, email, password, avatar, role } = getStrongParams(req);
 
         // Create a new User instance with the provided data
-        const user = new User({ firstName, lastName, nickname, email });
+        const user = new User({ firstName, lastName, nickname, email, role });
 
         // Validate user data and check for errors
         const validationErrors = user.validateSync();
@@ -135,7 +138,7 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
     try {
         // Extract and validate user input from the request
-        const { firstName, lastName, nickname, email, password, avatar } = getStrongParams(req);
+        const { firstName, lastName, nickname, email, password, avatar, role } = getStrongParams(req);
 
         // Find and verify a user based on the provided request parameters
         let user = await findAndVerifyUser(req);
@@ -145,6 +148,7 @@ export const update = async (req, res, next) => {
         user.lastName = lastName;
         user.nickname = nickname;
         user.email = email;
+        user.role = role;
 
         // Validate user data and check for errors
         const validationErrors = user.validateSync();
@@ -254,7 +258,7 @@ function getStrongParams(req) {
     }
 
     // Extract approved fields from the request body
-    const { id, firstName, lastName, nickname, email, avatar, password } = req.body;
+    const { id, firstName, lastName, nickname, email, avatar, password, role } = req.body;
 
-    return { id, firstName, lastName, nickname, email, avatar, password };
+    return { id, firstName, lastName, nickname, email, avatar, password, role };
 }
