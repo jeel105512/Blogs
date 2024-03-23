@@ -1,0 +1,23 @@
+<% 
+    let action="";
+    let content=""; 
+    let method="post"; 
+    
+    if(typeof comment !== "undefined" ){
+        action=`/${comment.id}`; 
+        content=comment.content;
+        method="put" ; 
+    } 
+%>
+
+<form action="/comments<%= action %>" method="post" class="mt-3">
+    <!-- hidden input to receive the type of method/http verb in the app middleware where we created a middleware to use all the http verbs -->
+    <input type="hidden" name="_method" value="<%= method %>">
+
+    <div class="form-group mb-3">
+        <label for="content" class="form-label">Content</label>
+        <input name="content" id="content" class="form-control" required value="<%= content %>" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

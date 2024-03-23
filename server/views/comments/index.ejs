@@ -1,0 +1,39 @@
+<%- include("../shared/_header") %>
+
+<div class="container mt-5">
+    <h1>Comment List</h1>
+
+    <hr class="my-5">
+
+    <a href="/comments/new">Create New Comment</a>
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Content</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(typeof comments !== "undefined" && comments.length > 0) { %>
+                <% comments.forEach(({ id, content, updatedAt }) => { %>
+                    <tr>
+                        <td><%= content %></td>
+                        <td><%= updatedAt %></td>
+                        <td>
+                            <a href="/comments/<%= id %>">View</a>
+                            <a href="/comments/<%= id %>/edit">Edit</a>
+                            <form action="/comments/<%= id %>" method="post" onsubmit="return confirm('Are you sure you want to permanently delete this comment?')">
+                                <input type="hidden" name="_method" value="delete">
+                                <button class="standard-link" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include("../shared/_footer") %>

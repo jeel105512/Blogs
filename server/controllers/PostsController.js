@@ -53,7 +53,7 @@ export const show = async (req, res, next) => {
 
     res.format({
       "text/html": () => {
-        res.render("posts/show", { post, title: "Post" });
+        res.render("posts/show", { post, user: req.user, title: "Post" });
       },
       "application/json": () => {
         res.json({ status: 200, message: "SUCCESS", post });
