@@ -277,3 +277,40 @@ export const remove = async (req, res, next) => {
     next(error);
   }
 };
+
+export const likeComment = async (req, res, next) => {
+  try {
+    const comment = await Comment.findById(req.body.commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ status: 404, message: "Comment not found" });
+    }
+    const userIndex = comment.likes.indexOf(req.user.id);
+    if (userIndex === -1) {
+      // If the user hasn't liked the comment, add their ID to the likes array
+      comment.numberOfLikes += 1;
+      comment.likes.push(req.user.id);
+    } else {
+      // If the user has already liked the comment, remove their ID from the likes array
+      comment.numberOfLikes -= 1;
+      comment.likes.splice(userIndex, 1);
+    }
+    await comment.save();
+
+    res.format({
+      "text/html": () => {
+        res.redirect(`/comments/${req.body.commentId}`);
+      },
+      "application/json": () => {
+        res.status(200).json({ status: 200, message: "SUCCESS" });
+      },
+      default: () => {
+        res.status(406).send("NOT ACCEPTABLE");
+      },
+    });
+    res.status(200).json(comment);
+  } catch (error) {
+    next(error);
+  }
+};

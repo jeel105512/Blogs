@@ -16,6 +16,10 @@ const CommentSchema = new Schema(
       type: String,
       required: [true, "Comment must contain some content"],
     },
+    likes: {
+      type: Array,
+      default: [],
+    },
     numberOfLikes: {
       type: Number,
       default: 0,

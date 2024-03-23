@@ -8,6 +8,7 @@ import {
   create,
   update,
   remove,
+  likeComment,
 } from "../controllers/CommentsController.js";
 import {
   isAuthenticated,
@@ -26,6 +27,7 @@ router.post("/:id", (req, _, next) => {
   req.method = "put";
   next();
 });
+router.post("/:id/likeComment", isAuthenticated, likeComment);
 router.put("/:id", isAuthenticated, update);
 router.delete("/:id", isAuthenticated, remove);
 

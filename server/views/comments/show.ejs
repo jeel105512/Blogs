@@ -13,6 +13,11 @@
                 <p class="comment-text">
                     <%= comment.content %>
                 </p>
+                <p>Number of likes: <%= comment.numberOfLikes %></p>
+                <form action="/comments/<%= comment.id %>/likeComment" method="post">
+                    <input type="hidden" name="commentId" value="<%= comment.id %>">
+                    <button type="submit" class="btn btn-primary">Like</button>
+                </form>
             </div>
         </div>
         
