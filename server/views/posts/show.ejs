@@ -13,7 +13,8 @@
             <% } else { %>
                 <p>No image available</p>
             <% } %>
-            <p><%= post.content %></p>
+            <!-- Use <%- %> to render HTML content -->
+            <p><%- post.content %></p>
         </div>
 
         <hr class="my-5">
