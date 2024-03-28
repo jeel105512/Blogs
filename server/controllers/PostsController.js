@@ -143,26 +143,6 @@ export const create = async (req, res, next) => {
 
     await post.save();
 
-    // email all the subscribers
-    const users = await User.find({ subscriber: true });
-    
-    for (const user of users) {
-      try {
-        await transporter.sendMail({
-          to: user.email,
-          from: process.env.EMAIL,
-          subject: `A Special New Blog For ${user.firstName}: ${post.title}`,
-          html: `
-            <p>There is a new Blog posted by your favorite blogger.</p>
-            <p>View the new Blog Post titled <a href="http://localhost:${process.env.PORT}/posts/${post.id}">${post.title}</a>.</p>
-            `,
-        });
-      } catch (error) {
-        console.error(`Error sending email to ${user.email}: ${error.message}`);
-        // Handle error appropriately, such as logging it
-      }
-    }
-
     res.redirect("/posts");
   } catch (error) {
     next(error);
@@ -228,3 +208,80 @@ export const remove = async (req, res, next) => {
     next(error);
   }
 };
+
+// Action for previewing post content
+export const preview = async (req, res, next) => {
+  try {
+    const post = await findAndVarifyPost(req);
+
+    res.render("posts/preview", {
+      post,
+      title: "Post Draft",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Publish the draft
+export const publish = async (req, res, next) => {
+  try {
+    const post = await findAndVarifyPost(req);
+    // Check if the user has permission to publish the post
+    if (req.user.role !== "ADMIN") {
+      return res
+        .status(403)
+        .send("You don't have permission to publish this post.");
+    }
+    // Change post status to "PUBLISHED"
+    post.status = "PUBLISHED";
+    await post.save();
+    res.redirect("/posts");
+
+    // email all the subscribers
+    const users = await User.find({ subscriber: true });
+
+    for (const user of users) {
+      try {
+        await transporter.sendMail({
+          to: user.email,
+          from: process.env.EMAIL,
+          subject: `A Special New Blog For ${user.firstName}: ${post.title}`,
+          html: `
+            <p>There is a new Blog posted by your favorite blogger.</p>
+            <p>View the new Blog Post titled <a href="http://localhost:${process.env.PORT}/posts/${post.id}">${post.title}</a>.</p>
+            `,
+        });
+      } catch (error) {
+        console.error(`Error sending email to ${user.email}: ${error.message}`);
+        next(error);
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const publicPosts = async (_, res, next) => {
+  try {
+    const posts = await Post.find({status: "PUBLISHED"});
+
+    res.format({
+      "text/html": () => {
+        res.render("posts/posts", {
+          posts,
+          title: "Public Posts",
+        });
+      },
+      "application/json": () => {
+        res.json({ status: 200, posts, message: "success" });
+      },
+      default: () => {
+        res.status(406).send("NOT ACCEPTABLE");
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}

@@ -17,6 +17,11 @@ const PostSchema = new Schema(
       type: String,
       required: [true, "post must contain some content"],
     },
+    status: {
+      type: String,
+      enum: ["DRAFT", "PUBLISHED"],
+      default: "DRAFT",
+    },
   },
   { timestamps: true }
 );

@@ -1,0 +1,32 @@
+<%- include("../shared/_header") %>
+
+<div class="container mt-5">
+    <h1><%= title %></h1>
+
+    <hr class="my-5">
+
+    <% if(typeof post !== undefined) { %>
+        <div>
+            <h2><%= post.title %></h2>
+            <% if (post.image && typeof post.image === 'string') { %>
+                <img src="http://localhost:5200/<%= post.image %>" alt="<%= post.image %>" style="width: 300px; height: 300px;">
+            <% } else { %>
+                <p>No image available</p>
+            <% } %>
+            <!-- Use <%- %> to render HTML content -->
+            <p><%- post.content %></p>
+        </div>
+
+        <hr class="my-5">
+
+        <form action="/posts/<%= post.id %>/publish" method="POST">
+            <button type="submit" class="btn btn-success">Publish</button>
+        </form>
+
+        <hr class="my-5">
+
+        <a href="/posts">Back to Posts</a>
+    <% } %>
+</div>
+
+<%- include("../shared/_footer") %>
