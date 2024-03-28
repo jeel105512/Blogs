@@ -286,16 +286,26 @@ export const likeComment = async (req, res, next) => {
         .status(404)
         .json({ status: 404, message: "Comment not found" });
     }
-    const userIndex = comment.likes.indexOf(req.user.id);
-    if (userIndex === -1) {
-      // If the user hasn't liked the comment, add their ID to the likes array
-      comment.numberOfLikes += 1;
+
+    const userIndexInLikes = comment.likes.indexOf(req.user.id);
+    const userIndexInDislikes = comment.dislikes.indexOf(req.user.id);
+
+    if (userIndexInLikes === -1) {
+      // User hasn't liked the comment
       comment.likes.push(req.user.id);
+      comment.numberOfLikes += 1;
     } else {
-      // If the user has already liked the comment, remove their ID from the likes array
+      // User has already liked the comment, remove from likes
+      comment.likes.splice(userIndexInLikes, 1);
       comment.numberOfLikes -= 1;
-      comment.likes.splice(userIndex, 1);
     }
+
+    if (userIndexInDislikes !== -1) {
+      // User has disliked the comment, remove from dislikes
+      comment.dislikes.splice(userIndexInDislikes, 1);
+      comment.numberOfDislikes -= 1;
+    }
+
     await comment.save();
 
     res.format({
@@ -309,7 +319,52 @@ export const likeComment = async (req, res, next) => {
         res.status(406).send("NOT ACCEPTABLE");
       },
     });
-    res.status(200).json(comment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const dislikeComment = async (req, res, next) => {
+  try {
+    const comment = await Comment.findById(req.body.commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ status: 404, message: "Comment not found" });
+    }
+
+    const userIndexInDislikes = comment.dislikes.indexOf(req.user.id);
+    const userIndexInLikes = comment.likes.indexOf(req.user.id);
+
+    if (userIndexInDislikes === -1) {
+      // User hasn't disliked the comment
+      comment.dislikes.push(req.user.id);
+      comment.numberOfDislikes += 1;
+    } else {
+      // User has already disliked the comment, remove from dislikes
+      comment.dislikes.splice(userIndexInDislikes, 1);
+      comment.numberOfDislikes -= 1;
+    }
+
+    if (userIndexInLikes !== -1) {
+      // User has liked the comment, remove from likes
+      comment.likes.splice(userIndexInLikes, 1);
+      comment.numberOfLikes -= 1;
+    }
+
+    await comment.save();
+
+    res.format({
+      "text/html": () => {
+        res.redirect(`/comments/${req.body.commentId}`);
+      },
+      "application/json": () => {
+        res.status(200).json({ status: 200, message: "SUCCESS" });
+      },
+      default: () => {
+        res.status(406).send("NOT ACCEPTABLE");
+      },
+    });
   } catch (error) {
     next(error);
   }

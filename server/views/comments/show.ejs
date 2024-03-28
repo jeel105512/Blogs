@@ -14,9 +14,14 @@
                     <%= comment.content %>
                 </p>
                 <p>Number of likes: <%= comment.numberOfLikes %></p>
+                <p>Number of dislikes: <%= comment.numberOfDislikes %></p>
                 <form action="/comments/<%= comment.id %>/likeComment" method="post">
                     <input type="hidden" name="commentId" value="<%= comment.id %>">
                     <button type="submit" class="btn btn-primary">Like</button>
+                </form>
+                <form action="/comments/<%= comment.id %>/dislikeComment" method="post">
+                    <input type="hidden" name="commentId" value="<%= comment.id %>">
+                    <button type="submit" class="btn btn-danger">Dislike</button>
                 </form>
             </div>
         </div>

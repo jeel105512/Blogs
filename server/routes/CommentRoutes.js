@@ -9,6 +9,7 @@ import {
   update,
   remove,
   likeComment,
+  dislikeComment,
 } from "../controllers/CommentsController.js";
 import {
   isAuthenticated,
@@ -28,6 +29,7 @@ router.post("/:id", (req, _, next) => {
   next();
 });
 router.post("/:id/likeComment", isAuthenticated, likeComment);
+router.post("/:id/dislikeComment", isAuthenticated, dislikeComment);
 router.put("/:id", isAuthenticated, update);
 router.delete("/:id", isAuthenticated, remove);
 

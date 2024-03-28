@@ -20,7 +20,15 @@ const CommentSchema = new Schema(
       type: Array,
       default: [],
     },
+    dislikes: {
+      type: Array,
+      default: [],
+    },
     numberOfLikes: {
+      type: Number,
+      default: 0,
+    },
+    numberOfDislikes: {
       type: Number,
       default: 0,
     },
