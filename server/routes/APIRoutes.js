@@ -10,6 +10,16 @@ import { show as userShow, create as userCreate, update as userUpdate } from "..
 import { isAuthenticated, authenticate as userAuthenticate, logout as userLogout } from "../controllers/AuthenticationController.js";
 import { requestToken, authenticate as applicationAuthenticate } from "../controllers/ApplicationController.js";
 import { upload } from "./UserRoutes.js";
+import {
+    publicPosts as postIndex,
+    show as postShow,
+} from "../controllers/PostsController.js";
+import {
+    index as commentIndex,
+    create as commentCreate,
+    likeComment,
+    dislikeComment,
+} from "../controllers/CommentsController.js";
 
 const router = Router();
 
@@ -38,5 +48,12 @@ router.put("/users/:id", applicationAuthenticate, upload.single("avatar"), userU
 router.post("/users/authenticate", applicationAuthenticate, userAuthenticate);
 router.post("/users/logout", applicationAuthenticate, isAuthenticated, userLogout);
 
+router.get("/posts/publicPosts", applicationAuthenticate, isAuthenticated, postIndex);
+router.get("/posts/:id", applicationAuthenticate, isAuthenticated, postShow);
+
+router.get("/comments", applicationAuthenticate, isAuthenticated, commentIndex);
+router.post("/comments", applicationAuthenticate, isAuthenticated, commentCreate);
+router.post("/comments/:id/likeComment", applicationAuthenticate, isAuthenticated, likeComment);
+router.post("/comments/:id/dislikeComment", applicationAuthenticate, isAuthenticated, dislikeComment);
 
 export default router;

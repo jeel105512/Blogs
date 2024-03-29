@@ -22,6 +22,8 @@ const RegisterPage = lazy(() => import("./pages/Users/Register"));
 const LoginPage = lazy(() => import("./pages/Users/Login"));
 const ProfilePage = lazy(() => import("./pages/Users/Profile"));
 const LogoutPage = lazy(() => import("./pages/Users/Logout"));
+const PostsPage = lazy(() => import("./pages/Posts/Index"));
+const PostPage = lazy(() => import("./pages/Posts/Show"));
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -67,6 +69,8 @@ const App = () => {
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/logout" element={<LogoutPage />} />
+                        <Route path="/posts" element={<PostsPage />} />
+                        <Route path="/posts/:id" element={<PostPage />} />
                     </Routes>
                 </Suspense>
             </Router>

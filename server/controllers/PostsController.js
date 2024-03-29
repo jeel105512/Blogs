@@ -16,11 +16,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Render the login page
-export const login = (_, res) => {
-  res.render("authentication/login");
-};
-
 const permanentStorage = "postsImages";
 
 async function findAndVarifyPost(req) {
@@ -76,7 +71,7 @@ export const show = async (req, res, next) => {
         res.render("posts/show", { post, user: req.user, title: "Post" });
       },
       "application/json": () => {
-        res.json({ status: 200, message: "SUCCESS", post });
+        res.json({ status: 200, message: "SUCCESS", post, userId: req.user.id });
       },
       default: () => {
         res.status(406).send("NOT ACCEPTABLE");
@@ -275,7 +270,7 @@ export const publicPosts = async (_, res, next) => {
         });
       },
       "application/json": () => {
-        res.json({ status: 200, posts, message: "success" });
+        res.json({ status: 200, posts, message: "SUCCESS" });
       },
       default: () => {
         res.status(406).send("NOT ACCEPTABLE");
