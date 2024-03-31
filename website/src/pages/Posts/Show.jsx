@@ -4,6 +4,9 @@ import PageTitle from "../../components/PageTitle";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Post from "./Post";
+import Comment from "./Comment";
+
 const Show = () => {
     axios.defaults.withCredentials = true;
 
@@ -52,20 +55,6 @@ const Show = () => {
         setContent("");
     }
 
-    // async function handleEdit(e, commentId, updatedContent) {
-    //     e.preventDefault();
-
-    //     const comment = {
-    //         userId,
-    //         postId: id,
-    //         content: updatedContent,
-    //     };
-
-    //     await axios.put(`/api/comments/${commentId}`, comment);
-    //     navigate(`/posts/${id}`);
-    //     setEditCommentId(null); // Reset edit mode after submitting edit
-    // }
-
     async function handleEdit(commentId, existingContent) {
         setEditComment(existingContent); // Prefill content for editing
         setEditCommentId(commentId);
@@ -80,7 +69,6 @@ const Show = () => {
         e.preventDefault();
         const updatedComment = editComment.trim();
         if (updatedComment === "") {
-            // Optionally handle empty content
             return;
         }
 
@@ -137,17 +125,9 @@ const Show = () => {
     return (
         <div className="container">
             <PageTitle title="Post" />
-
             <h1>Post</h1>
-
             <hr className="my-3" />
-
-            <div>
-                <h1>{post.title}</h1>
-                <img src={`http://localhost:5200/${post.image}`} alt={post.title} style={{ height: 100, width: 100, display: "block" }} />
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            </div>
-
+            <Post post={post} />
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <textarea
@@ -158,35 +138,23 @@ const Show = () => {
                         onChange={(e) => setContent(e.target.value)}
                     ></textarea>
                 </div>
-
-                <button type="submit" className="btn btn-primary">
-                    Comment
-                </button>
+                <button type="submit" className="btn btn-primary">Comment</button>
             </form>
-
             <ul>
-                {comments.map(comment => (
-                    <li key={comment._id}>
-                        {editCommentId === comment._id ? (
-                            <form onSubmit={(e) => { handleUpdate(e, comment._id); }}>
-                                <div className="form-group">
-                                    <textarea className="form-control" value={editComment} onChange={(e) => setEditComment(e.target.value)} />
-                                </div>
-                                <button type="submit" className="btn btn-primary">Update</button>
-                                <button type="button" className="btn btn-secondary" onClick={cancelEdit}>Cancel</button>
-                            </form>
-                        ) : (
-                            <>
-                                <div>{comment.content}</div>
-                                <div>{`Number of likes: ${comment.numberOfLikes}`}</div>
-                                <div>{`Number of dislikes: ${comment.numberOfDislikes}`}</div>
-                                <button className="btn btn-secondary" onClick={() => handleEdit(comment._id, comment.content)}>Edit</button>
-                                <button className="btn btn-success" onClick={(e) => handleLike(e, comment._id)}>Like</button>
-                                <button className="btn btn-danger" onClick={(e) => handleDislike(e, comment._id)}>Dislike</button>
-                                <button className="btn btn-danger" onClick={(e) => handleDelete(e, comment._id)}>Delete</button>
-                            </>
-                        )}
-                    </li>
+                {comments.map((comment) => (
+                    <Comment
+                        key={comment._id}
+                        comment={comment}
+                        handleEdit={handleEdit}
+                        handleLike={handleLike}
+                        handleDislike={handleDislike}
+                        handleDelete={handleDelete}
+                        isEditing={editCommentId === comment._id}
+                        editComment={editComment}
+                        setEditComment={setEditComment}
+                        handleUpdate={handleUpdate}
+                        cancelEdit={cancelEdit}
+                    />
                 ))}
             </ul>
         </div>
