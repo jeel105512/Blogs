@@ -1,6 +1,11 @@
 import React from "react";
+import { useAuth } from "../../App";
 
 const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete, isEditing, editComment, setEditComment, handleUpdate, cancelEdit }) => {
+    const { user } = useAuth();
+
+    const isCommentCreator = comment.userId === user.id;
+
     return (
         <li key={comment._id}>
             {isEditing ? (
@@ -16,10 +21,14 @@ const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete,
                     <div>{comment.content}</div>
                     <div>{`Number of likes: ${comment.numberOfLikes}`}</div>
                     <div>{`Number of dislikes: ${comment.numberOfDislikes}`}</div>
-                    <button className="btn btn-secondary" onClick={() => handleEdit(comment._id, comment.content)}>Edit</button>
+                    {isCommentCreator && (
+                        <>
+                            <button className="btn btn-secondary" onClick={() => handleEdit(comment._id, comment.content)}>Edit</button>
+                            <button className="btn btn-danger" onClick={(e) => handleDelete(e, comment._id)}>Delete</button>
+                        </>
+                    )}
                     <button className="btn btn-success" onClick={(e) => handleLike(e, comment._id)}>Like</button>
                     <button className="btn btn-danger" onClick={(e) => handleDislike(e, comment._id)}>Dislike</button>
-                    <button className="btn btn-danger" onClick={(e) => handleDelete(e, comment._id)}>Delete</button>
                 </>
             )}
         </li>
