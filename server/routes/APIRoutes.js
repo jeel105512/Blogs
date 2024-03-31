@@ -17,8 +17,10 @@ import {
 import {
     index as commentIndex,
     create as commentCreate,
+    update as commentUpdate,
     likeComment,
     dislikeComment,
+    remove as commentDelete,
 } from "../controllers/CommentsController.js";
 
 const router = Router();
@@ -55,5 +57,7 @@ router.get("/comments", applicationAuthenticate, isAuthenticated, commentIndex);
 router.post("/comments", applicationAuthenticate, isAuthenticated, commentCreate);
 router.post("/comments/:id/likeComment", applicationAuthenticate, isAuthenticated, likeComment);
 router.post("/comments/:id/dislikeComment", applicationAuthenticate, isAuthenticated, dislikeComment);
+router.put("/comments/:id", applicationAuthenticate, isAuthenticated, commentUpdate);
+router.delete("/comments/:id", applicationAuthenticate, isAuthenticated, commentDelete);
 
 export default router;

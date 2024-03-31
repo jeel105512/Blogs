@@ -27,5 +27,7 @@ router.get("/comments", Comment.index);
 router.post("/comments", Comment.create);
 router.post("/comments/:id/likeComment", Comment.like);
 router.post("/comments/:id/dislikeComment", Comment.dislike);
+router.put("/comments/:id", Comment.update);
+router.delete("/comments/:id", Comment.destroy);
 
 export default router;

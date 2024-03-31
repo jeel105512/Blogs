@@ -28,6 +28,17 @@ const CommentService = (async () => {
         throw error;
       }
     },
+    update: async (id, comment, cookies) => {
+      try {
+        await apiProvider.put(`/comments/${id}`, comment, {
+          headers: {
+            Cookie: cookies,
+          },
+        });
+      } catch (error) {
+        throw error;
+      }
+    },
     like: async (comment, id, cookies) => {
       try {
         await apiProvider.post(`/comments/${id}/likeComment`, comment, {
@@ -42,6 +53,17 @@ const CommentService = (async () => {
     dislike: async (comment, id, cookies) => {
       try {
         await apiProvider.post(`/comments/${id}/dislikeComment`, comment, {
+          headers: {
+            Cookie: cookies,
+          },
+        });
+      } catch (error) {
+        throw error;
+      }
+    },
+    destroy: async (id, cookies) => {
+      try {
+        await apiProvider.delete(`/comments/${id}`, {
           headers: {
             Cookie: cookies,
           },
