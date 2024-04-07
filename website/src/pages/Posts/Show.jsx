@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import Post from "./Post";
 import Comment from "./Comment";
+import client from "../../../facade/utilities/CohereClient";
 
 const Show = () => {
     axios.defaults.withCredentials = true;
@@ -18,6 +19,7 @@ const Show = () => {
     const [comments, setComments] = React.useState([]);
     const [editCommentId, setEditCommentId] = useState(null); // Track which comment is being edited
     const [editComment, setEditComment] = useState(""); // Track content for editing
+    const [generatedComment, setGeneratedComment] = useState(""); // State to hold generated comment
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -122,12 +124,34 @@ const Show = () => {
         navigate(`/posts/${id}`);
     }
 
+    async function cohere(e, comment) {
+        e.preventDefault();
+        try {
+            const prompt = `Can you please re-write this statement in a better way: ${comment}`;
+
+            const response = await client.generate({
+                prompt,
+            });
+
+            const generatedComment = response.generations[0].text;
+            setGeneratedComment(generatedComment); // Set the generated comment in state
+        } catch (error) {
+            console.error("Error generating comment:", error);
+        }
+    }
+
     return (
         <div className="container">
             <PageTitle title="Post" />
             <h1>Post</h1>
             <hr className="my-3" />
             <Post post={post} />
+            {/* Display generated comment */}
+            {generatedComment && (
+                <div className="alert alert-info" role="alert">
+                    <strong>Improved Comment:</strong> {generatedComment}
+                </div>
+            )}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <textarea
@@ -139,6 +163,7 @@ const Show = () => {
                     ></textarea>
                 </div>
                 <button type="submit" className="btn btn-primary">Comment</button>
+                <button className="btn btn-primary" onClick={(e) => cohere(e, content)}>Improve Comment</button>
             </form>
             <ul>
                 {comments.map((comment) => (
@@ -154,6 +179,7 @@ const Show = () => {
                         setEditComment={setEditComment}
                         handleUpdate={handleUpdate}
                         cancelEdit={cancelEdit}
+                        cohere={cohere}
                     />
                 ))}
             </ul>

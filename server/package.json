@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gcsmckinnon/COMP-2068-W23#readme",
   "dependencies": {
+    "cohere-ai": "^7.9.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",

@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../App";
 
-const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete, isEditing, editComment, setEditComment, handleUpdate, cancelEdit }) => {
+const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete, isEditing, editComment, setEditComment, handleUpdate, cancelEdit, cohere }) => {
     const { user } = useAuth();
 
     const isCommentCreator = comment.userId === user.id;
@@ -10,13 +10,17 @@ const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete,
         <li key={comment._id}>
             
             {isEditing ? (
-                <form onSubmit={(e) => { handleUpdate(e, comment._id); }}>
-                    <div className="form-group">
-                        <textarea className="form-control" value={editComment} onChange={(e) => setEditComment(e.target.value)} />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Update</button>
-                    <button type="button" className="btn btn-secondary" onClick={cancelEdit}>Cancel</button>
-                </form>
+                <>
+                    <form onSubmit={(e) => { handleUpdate(e, comment._id); }}>
+                        <div className="form-group">
+                            <textarea className="form-control" value={editComment} onChange={(e) => setEditComment(e.target.value)} />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Update</button>
+                        <button type="button" className="btn btn-secondary" onClick={cancelEdit}>Cancel</button>
+                    </form>
+                    {/* Button to generate comment */}
+                    <button className="btn btn-primary" onClick={(e) => cohere(e, comment.content)}>Improve Comment</button>
+                </>
             ) : (
                 <>
                     <div>{comment.content}</div>

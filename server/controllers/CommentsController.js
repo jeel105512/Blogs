@@ -1,4 +1,9 @@
 import Comment from "../models/Comment.js";
+import { CohereClient } from "cohere-ai";
+
+const client = new CohereClient({
+  token: process.env.COHERE_API_KEY,
+});
 
 async function findAndVarifyComment(req) {
   const comment = await Comment.findById(req.params.id).populate({
