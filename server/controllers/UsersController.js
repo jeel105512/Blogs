@@ -261,7 +261,7 @@ function getStrongParams(req) {
     // Extract approved fields from the request body
     const { id, firstName, lastName, nickname, email, avatar, password, role } = req.body;
 
-    const subscriber = req.body.subscriber === 'on';
+    const subscriber = req.body.subscriber === 'true';
 
     return { id, firstName, lastName, nickname, email, avatar, password, subscriber, role };
 }

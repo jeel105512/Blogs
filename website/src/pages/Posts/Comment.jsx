@@ -8,6 +8,7 @@ const Comment = ({ comment, handleEdit, handleLike, handleDislike, handleDelete,
 
     return (
         <li key={comment._id}>
+            
             {isEditing ? (
                 <form onSubmit={(e) => { handleUpdate(e, comment._id); }}>
                     <div className="form-group">
