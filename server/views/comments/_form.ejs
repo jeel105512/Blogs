@@ -1,12 +1,12 @@
 <% 
-    let action="";
-    let content=""; 
-    let method="post"; 
+    let action = "";
+    let content = ""; 
+    let method = "post"; 
     
-    if(typeof comment !== "undefined" ){
-        action=`/${comment.id}`; 
-        content=comment.content;
-        method="put" ; 
+    if (typeof comment !== "undefined") {
+        action = `/${comment.id}`; 
+        content = comment.content;
+        method = "put"; 
     } 
 %>
 
@@ -15,9 +15,15 @@
     <input type="hidden" name="_method" value="<%= method %>">
 
     <div class="form-group mb-3">
-        <label for="content" class="form-label">Content</label>
-        <input name="content" id="content" class="form-control" required value="<%= content %>" />
+        <label for="content" class="form-label text-light">Content</label>
+        <input name="content" id="content" class="form-control bg-dark text-light" required value="<%= content %>" />
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
+
+    <% if (typeof comment === "undefined") { %>
+        <a href="/comments" class="btn btn-secondary ms-2">Cancel</a>
+    <% } else { %>
+        <a href="/comments/<%= comment.id %>" class="btn btn-secondary ms-2">Cancel</a>
+    <% } %>
 </form>

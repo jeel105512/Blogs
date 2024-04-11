@@ -1,21 +1,39 @@
 <%- include("../shared/_header") %>
 
 <div class="container mt-5">
-    <h1>User Profile</h1>
-
-    <hr class="my-5">
-
-    <a href="/users/<%= user.id %>/edit">Edit user</a>
-
-    <div>
-        <div>
-            <p>
-                <%= user.firstName %> <%= user.lastName %>
-            </p>
+    <div class="card bg-dark text-light">
+        <div class="card-header">
+            <h1 class="card-title">User Profile</h1>
+        </div>
+        <div class="card-body">
+            <a href="/users/<%= user.id %>/edit" class="btn btn-primary mb-3">Edit User</a>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <% if (user.avatar && typeof user.avatar === 'string') { %>
+                        <img src="http://localhost:5200/<%= user.avatar %>" alt="User Avatar" class="img-thumbnail" style="width: 150px; height: 150px;">
+                    <% } else { %>
+                        <img src="/images/user-thumbnail.png" alt="User Avatar" class="img-thumbnail" style="width: 150px; height: 150px;">
+                    <% } %>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <h3>User Information:</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-dark text-light">First Name: <%= user.firstName %></li>
+                            <li class="list-group-item bg-dark text-light">Last Name: <%= user.lastName %></li>
+                            <li class="list-group-item bg-dark text-light">Nickname: <%= user.nickname %></li>
+                            <li class="list-group-item bg-dark text-light">Email: <%= user.email %></li>
+                            <li class="list-group-item bg-dark text-light">Role: <%= user.role %></li>
+                            <li class="list-group-item bg-dark text-light">Subscriber: <%= user.subscriber ? 'Yes' : 'No' %></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="/users" class="btn btn-primary">Back to Users</a>
         </div>
     </div>
-
-    <a href="/users">Back to users</a>
 </div>
 
 <%- include("../shared/_footer") %>

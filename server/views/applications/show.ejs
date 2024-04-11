@@ -2,27 +2,25 @@
 
 <div class="container mt-5">
     <h1>Application Credentials</h1>
-
     <hr class="my-5">
+    <a href="/applications/<%= application.id %>/edit" class="btn btn-primary mb-3">Edit Application Credentials</a>
 
-    <a href="/applications/<%= application.id %>/edit">Edit application credentials</a>
-
-    <ul class="list-group list-group-horizontal my-3">
-        <li class="list-group-item">Application Name:</li>
+    <ul class="list-group my-3">
+        <li class="list-group-item bg-dark text-light">Application Name:</li>
         <li class="list-group-item"><%= application.name %></li>
     </ul>
 
-    <ul class="list-group list-group-horizontal my-3">
-        <li class="list-group-item">Application Key:</li>
+    <ul class="list-group my-3">
+        <li class="list-group-item bg-dark text-light">Application Key:</li>
         <li class="list-group-item"><%= application.key %></li>
     </ul>
 
-    <ul class="list-group list-group-horizontal my-3">
-        <li class="list-group-item">Application Secret:</li>
+    <ul class="list-group my-3">
+        <li class="list-group-item bg-dark text-light">Application Secret:</li>
         <li class="list-group-item"><%= application.secret %></li>
     </ul>
 
-    <a href="/applications">Back to applications</a>
+    <a href="/applications" class="btn btn-secondary">Back to Applications</a>
 </div>
 
 <%- include("../shared/_footer") %>

@@ -1,42 +1,43 @@
 <%- include("../shared/_header") %>
 
-    <div class="container mt-5">
+<div class="container mt-5 text-light">
 
-        <h1><%= title %></h1>
-        <hr class="my-5">
-        <a href="/posts/new">Create New Post</a>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Image</th>
-                    <th>Content</th>
-                    <th>Last Updated</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if(typeof posts !== "undefined" && posts.length > 0) { %>
-                    <% posts.forEach(({ id, title, image, content, updatedAt }) => { %>
-                        <tr>
-                            <td><%= title %></td>
-                            <td><img src="http://localhost:5200/<%= image %>" alt="<%= image %>" style="width: 100px; height: 100px;"></td>
-                            <td><%= content %></td>
-                            <td><%= updatedAt %></td>
-                            <td>
-                                <a href="/posts/<%= id %>">View</a>
-                                <a href="/posts/<%= id %>/edit">Edit</a>
-                                <form action="/posts/<%= id %>" method="post" onsubmit="return confirm('Are you sure you want to permanantly delete this post?')">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button class="standard-link" type="submit">Delete</button>
-                                </form>
-                                <a href="/posts/<%= id %>/preview">Preview</a>
-                            </td>
-                        </tr>
-                    <% }); %>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
+    <h1><%= title %></h1>
+    <hr class="my-5">
+    <a href="/posts/new" class="btn btn-success mb-3">Create New Post</a>
+    <a href="/posts/" class="btn btn-primary mb-3">Back All Post</a>
+    <table class="table table-dark table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Content</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(typeof posts !== "undefined" && posts.length > 0) { %>
+                <% posts.forEach(({ id, title, image, content, updatedAt }) => { %>
+                    <tr>
+                        <td><%= title %></td>
+                        <td><img src="http://localhost:5200/<%= image %>" alt="<%= image %>" style="width: 100px; height: 100px;"></td>
+                        <td><%= content %></td>
+                        <td><%= updatedAt %></td>
+                        <td>
+                            <a href="/posts/<%= id %>" class="btn btn-primary">View</a>
+                            <a href="/posts/<%= id %>/edit" class="btn btn-warning">Edit</a>
+                            <form action="/posts/<%= id %>" method="post" onsubmit="return confirm('Are you sure you want to permanently delete this post?')">
+                                <input type="hidden" name="_method" value="delete">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                            <a href="/posts/<%= id %>/preview" class="btn btn-info">Preview</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
 
 <%- include("../shared/_footer") %>

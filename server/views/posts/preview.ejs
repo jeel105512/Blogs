@@ -1,20 +1,20 @@
 <%- include("../shared/_header") %>
 
-<div class="container mt-5">
+<div class="container mt-5 text-light">
     <h1><%= title %></h1>
 
     <hr class="my-5">
 
     <% if(typeof post !== undefined) { %>
         <div>
-            <h2><%= post.title %></h2>
+            <h2 class="mb-3"><%= post.title %></h2>
             <% if (post.image && typeof post.image === 'string') { %>
-                <img src="http://localhost:5200/<%= post.image %>" alt="<%= post.image %>" style="width: 300px; height: 300px;">
+                <img src="http://localhost:5200/<%= post.image %>" alt="<%= post.image %>" class="img-fluid rounded mb-3">
             <% } else { %>
-                <p>No image available</p>
+                <p class="mb-3">No image available</p>
             <% } %>
             <!-- Use <%- %> to render HTML content -->
-            <p><%- post.content %></p>
+            <p class="mb-3"><%- post.content %></p>
         </div>
 
         <hr class="my-5">
@@ -25,7 +25,7 @@
 
         <hr class="my-5">
 
-        <a href="/posts">Back to Posts</a>
+        <a href="/posts" class="btn btn-secondary">Back to Posts</a>
     <% } %>
 </div>
 
