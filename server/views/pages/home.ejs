@@ -1,9 +1,83 @@
 <%- include("../shared/_header"); %>
 
-    <div class="container mt-5">
-        <h1>Content Management System</h1>
-
-        <hr class="my-5">
+<div class="container mt-5">
+    <!-- Total Users Card -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Total Users</h5>
+            <p class="card-text">Total number of users: <%= totalUsers %></p>
+        </div>
     </div>
+    
+    <!-- Total Comments Card -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Total Comments</h5>
+            <p class="card-text">Total number of comments: <%= totalComments %></p>
+        </div>
+    </div>
+    
+    <!-- Total Posts Card -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Total Posts</h5>
+            <p class="card-text">Total number of posts: <%= totalPosts %></p>
+        </div>
+    </div>
+
+    <hr class="my-5">
+    
+    <!-- Recent Users -->
+    <h2>Recent Users</h2>
+    <a href="/users">All Users</a>
+    <% recentUsers.forEach(user => { %>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
+                <p class="card-text">Email: <%= user.email %></p>
+                <% if (user.avatar && typeof user.avatar === 'string') { %>
+                    <img src="	http://localhost:5200/<%= user.avatar %>" alt="<%= user.avatar %>" style="width: 50px; height: 50px;">
+                <% } else { %>
+                    <p>No avatar available</p>
+                <% } %>
+                <p class="card-text">Joined: <%= user.createdAt.toDateString() %></p>
+            </div>
+        </div>
+    <% }); %>
+
+    <hr class="my-5">
+    
+    <!-- Recent Comments -->
+    <h2>Recent Comments</h2>
+    <a href="/comments">All Comments</a>
+    <% recentComments.forEach(comment => { %>
+        <div class="card mt-3">
+            <div class="card-body">
+                <p class="card-text"><%= comment.content %></p>
+                <p class="card-text">Posted by: <%= comment.userId %> on <%= comment.createdAt.toDateString() %></p>
+            </div>
+        </div>
+    <% }); %>
+
+    <hr class="my-5">
+    
+    <!-- Recent Posts -->
+    <h2>Recent Posts</h2>
+    <a href="/posts">All Posts</a>
+    <% recentPosts.forEach(post => { %>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text"><%= post.content %></p>
+                <% if (post.image && typeof post.image === 'string') { %>
+                    <img src="	http://localhost:5200/<%= post.image %>" alt="<%= post.image %>" style="width: 300px; height: 300px;">
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+                <p class="card-text">Posted on <%= post.createdAt.toDateString() %></p>
+            </div>
+        </div>
+    <% }); %>
+</div>
 
 <%- include("../shared/_footer"); %>

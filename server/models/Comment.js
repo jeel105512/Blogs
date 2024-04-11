@@ -46,4 +46,26 @@ const CommentSchema = new Schema(
   { timestamps: true }
 );
 
+// Define a static method on the CommentSchema to get the newest 5 comments
+CommentSchema.statics.getNewestComments = async function() {
+  try {
+    // Fetch the newest 5 comments based on creation timestamp in descending order
+    const newestComments = await this.find().sort({ createdAt: -1 }).limit(5);
+    return newestComments;
+  } catch (error) {
+    throw new Error("Error fetching newest comments");
+  }
+};
+
+// Define a static method on the CommentSchema to get the total number of comments
+CommentSchema.statics.getTotalComments = async function() {
+  try {
+    // Count all comments
+    const totalComments = await this.countDocuments();
+    return totalComments;
+  } catch (error) {
+    throw new Error("Error fetching total number of comments");
+  }
+};
+
 export default mongoose.model("Comment", CommentSchema);

@@ -63,6 +63,28 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+// Define a static method on the UserSchema to get the newest 5 users
+UserSchema.statics.getNewestUsers = async function() {
+  try {
+    // Fetch the newest 5 users based on creation timestamp in descending order
+    const newestUsers = await this.find().sort({ createdAt: -1 }).limit(5);
+    return newestUsers;
+  } catch (error) {
+    throw new Error("Error fetching newest users");
+  }
+};
+
+// Define a static method on the UserSchema to get the total number of users
+UserSchema.statics.getTotalUsers = async function() {
+  try {
+    // Count all users
+    const totalUsers = await this.countDocuments();
+    return totalUsers;
+  } catch (error) {
+    throw new Error("Error fetching total number of users");
+  }
+};
+
 // Use the passport-local-mongoose plugin to enhance the UserSchema
 UserSchema.plugin(passportLocalMongoose, {
   usernameField: "email", // Use the "email" field as the username field for authentication
