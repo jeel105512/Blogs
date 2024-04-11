@@ -1,23 +1,280 @@
-.standard-link {
-    border: none;
-    background-color: transparent;
-    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity,1));
-    text-decoration: underline;
-    display: inline;
+:root {
+    --main-bg-dark: #212529;
+    --card-bg-dark: #343a40;
+    --font-light-dark: #858585;
+    --font-white: #ffffff;
+    --user-icon-bg: #386641;
+    --comments-icon-bg: #00b4d8;
+    --posts-icon-bg: #a7c957;
 }
 
-.ca-resource {
-    width: 200px; /* Adjust width as needed */
-    height: 250px; /* Adjust height as needed */
-    margin: 10px;
-    font-size: 14px; /* Adjust font size as needed */
-    font-family: Arial, sans-serif; /* Resources Against Humanity uses Helvetica Neue, but Arial is a close alternative */
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.ca-resource .resource-body {
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background: var(--main-bg-dark);
+}
+
+main {
+    width: 100%;
+    height: 100%;
+}
+
+/* Home Section*/
+
+/* Home Total Section */
+.total-count-container {
+    width: 100%;
+    height: 20%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.total-count-card {
+    background: var(--card-bg-dark);
+    padding: 1em;
+    width: 300px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 10px;
+}
+
+.total-count-left p:nth-of-type(1) {
+    font-size: 1.25rem;
+    color: var(--font-light-dark);
+}
+
+.total-count-left p:nth-of-type(2) {
+    color: var(--font-white);
+    font-size: 1.5rem;
+}
+
+.total-count-right>i {
+    font-size: 1.5rem;
+}
+
+.total-count-right>i.fa-users {
+    padding: 0.5em;
+    color: var(--font-white);
+    background: var(--user-icon-bg);
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.4em;
+}
+
+.total-count-right>i.fa-comments {
+    padding: 0.5em;
+    color: var(--font-white);
+    background: var(--comments-icon-bg);
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-count-right>i.fa-passport {
+    padding: 0.5em;
+    color: var(--font-white);
+    background: var(--posts-icon-bg);
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Home Recent Section */
+.recent-users-and-comments-container {
+    padding: 2em;
+    width: 100%;
+    /* height: 80%; */
+    height: fit-content;
+
+    color: var(--font-white);
+    display: flex;
+    gap: 1em;
+}
+
+.recent-users-container {
+    flex: 1;
+}
+
+.recent-comments-container {
+    flex: 2;
+}
+
+.recent-comments-container,
+.recent-users-container {
+    padding: 0.25em 1em;
+    background: var(--card-bg-dark);
+    border-radius: 20px;
+}
+
+.recent-posts-container-top,
+.recent-users-container-top,
+.recent-comments-container-top {
+    padding: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recent-posts-container-top>p,
+.recent-users-container-top>p,
+.recent-comments-container-top>p {
     font-weight: bold;
+    color: var(--font-white);
+}
+
+.see-all-button {
+    padding: 0.5em 1em;
+    color: var(--font-white);
+    background: var(--main-bg-dark);
+
+    border: 2px solid #bbd0ff;
+    border-radius: 50px;
+
+    text-decoration: none;
+}
+
+.recent-users-container-bottom,
+.recent-comments-container-bottom {
+    padding: 0.25em 1em;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.recent-users-container-bottom-top,
+.recent-comments-container-bottom-top {
+    color: var(--font-light-dark);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: space-evenly; */
+}
+
+.recent-users-container-bottom-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.recent-users-container-bottom-bottom-list-item {
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: space-evenly; */
+    align-items: center;
+}
+
+.recent-users-container-bottom-bottom-list-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.recent-comments-container-bottom-top {
+    justify-content: space-between;
+}
+
+.recent-posts-container-bottom-bottom,
+.recent-comments-container-bottom-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.recent-posts-container-bottom-bottom-list-item,
+.recent-comments-container-bottom-bottom-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recent-comments-container-bottom-bottom-list-item p:nth-of-type(1) {
+    width: 80%;
+}
+
+.recent-comments-container-bottom-bottom-list-item p:nth-of-type(2) {
+    width: 30%;
+    text-align: right;
+}
+
+/* Recent Posts Section*/
+.recent-posts-container-bottom-top {
+    color: var(--font-light-dark);
+    font-weight: 600;
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+}
+
+.recent-posts-container {
+    padding: 0em 3em 1em 3em;
+}
+
+.recent-posts-container-top {
+    background: var(--card-bg-dark);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.recent-posts-container-bottom {
+    padding-bottom: 1em;
+    background: var(--card-bg-dark);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.recent-posts-container-bottom-bottom-list-item {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.recent-posts-container-bottom-bottom-list-item img {
+    text-align: center;
+
+    width: 150px;
+    height: 100px;
+
+    border-radius: 20px;
+}
+
+.recent-posts-container-bottom-bottom-list-item p {
+    text-align: center;
+    color: var(--font-white);
 }

@@ -1,83 +1,109 @@
 <%- include("../shared/_header"); %>
 
-<div class="container mt-5">
-    <!-- Total Users Card -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Total Users</h5>
-            <p class="card-text">Total number of users: <%= totalUsers %></p>
+<main>
+    <div class="total-count-container">
+        <div class="total-count-card">
+            <div class="total-count-left">
+                <p>Total Users</p>
+                <p><%= totalUsers %></p>
+            </div>
+            <div class="total-count-right">
+                <i class="fa-solid fa-users"></i>
+            </div>
         </div>
-    </div>
-    
-    <!-- Total Comments Card -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Total Comments</h5>
-            <p class="card-text">Total number of comments: <%= totalComments %></p>
+        <div class="total-count-card">
+            <div class="total-count-left">
+                <p>Total Comments</p>
+                <p><%= totalComments %></p>
+            </div>
+            <div class="total-count-right">
+                <i class="fa-solid fa-comments"></i>
+            </div>
         </div>
-    </div>
-    
-    <!-- Total Posts Card -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Total Posts</h5>
-            <p class="card-text">Total number of posts: <%= totalPosts %></p>
+        <div class="total-count-card">
+            <div class="total-count-left">
+                <p>Total Posts</p>
+                <p><%= totalPosts %></p>
+            </div>
+            <div class="total-count-right">
+                <i class="fa-solid fa-passport"></i>
+            </div>
         </div>
     </div>
 
-    <hr class="my-5">
-    
-    <!-- Recent Users -->
-    <h2>Recent Users</h2>
-    <a href="/users">All Users</a>
-    <% recentUsers.forEach(user => { %>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
-                <p class="card-text">Email: <%= user.email %></p>
-                <% if (user.avatar && typeof user.avatar === 'string') { %>
-                    <img src="	http://localhost:5200/<%= user.avatar %>" alt="<%= user.avatar %>" style="width: 50px; height: 50px;">
-                <% } else { %>
-                    <p>No avatar available</p>
-                <% } %>
-                <p class="card-text">Joined: <%= user.createdAt.toDateString() %></p>
+    <div class="recent-users-and-comments-container">
+        <div class="recent-users-container">
+            <div class="recent-users-container-top">
+                <p>Recent users</p>
+                <a href="/users" class="see-all-button">See all</a>
+            </div>
+            <div class="recent-users-container-bottom">
+                <div class="recent-users-container-bottom-top">
+                    <p>User Avatar</p>
+                    <p>User Name</p>
+                </div>
+                <div class="recent-users-container-bottom-bottom">
+                    <% recentUsers.forEach(user => { %>
+                        <div class="recent-users-container-bottom-bottom-list-item">
+                            <% if (user.avatar && typeof user.avatar === 'string') { %>
+                                <img src="http://localhost:5200/<%= user.avatar %>" alt="<%= user.avatar %>">
+                            <% } else { %>
+                                <img src="/images/user-thumbnail.png" alt="user-thumbnail">
+                            <% } %>
+                            <p><%= user.firstName %></p>
+                        </div>
+                    <% }); %>
+                </div>
             </div>
         </div>
-    <% }); %>
+        <div class="recent-comments-container">
+            <div class="recent-comments-container-top">
+                <p>Recent comments</p>
+                <a href="/comments" class="see-all-button">See all</a>
+            </div>
+            <div class="recent-comments-container-bottom">
+                <div class="recent-comments-container-bottom-top">
+                    <p>Comment Content</p>
+                    <p>Likes</p>
+                </div>
+                <div class="recent-comments-container-bottom-bottom">
+                    <% recentComments.forEach(comment => { %>
+                        <div class="recent-comments-container-bottom-bottom-list-item">
+                            <p><%= comment.content %></p>
+                            <p><%= comment.numberOfLikes %></p>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <hr class="my-5">
-    
-    <!-- Recent Comments -->
-    <h2>Recent Comments</h2>
-    <a href="/comments">All Comments</a>
-    <% recentComments.forEach(comment => { %>
-        <div class="card mt-3">
-            <div class="card-body">
-                <p class="card-text"><%= comment.content %></p>
-                <p class="card-text">Posted by: <%= comment.userId %> on <%= comment.createdAt.toDateString() %></p>
+    <div class="recent-posts-container">
+        <div class="recent-posts-container-top">
+            <p>Recent posts</p>
+            <a href="/posts" class="see-all-button">See all</a>
+        </div>
+        <div class="recent-posts-container-bottom">
+            <div class="recent-posts-container-bottom-top">
+                <p>Post Image</p>
+                <p>Post Title</p>
+                <p>Post Status</p>
+            </div>
+            <div class="recent-posts-container-bottom-bottom">
+                <% recentPosts.forEach(post => { %>
+                    <div class="recent-posts-container-bottom-bottom-list-item">
+                        <% if (post.image && typeof post.image === 'string') { %>
+                            <img src="http://localhost:5200/<%= post.image %>" alt="<%= post.image %>">
+                        <% } else { %>
+                            <img src="/images/post-thumbnail.jpg" alt="post-thumbnail">
+                        <% } %>
+                        <p><%= post.title %></p>
+                        <p><%= post.status %></p>
+                    </div>
+                <% }); %>
             </div>
         </div>
-    <% }); %>
-
-    <hr class="my-5">
-    
-    <!-- Recent Posts -->
-    <h2>Recent Posts</h2>
-    <a href="/posts">All Posts</a>
-    <% recentPosts.forEach(post => { %>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title"><%= post.title %></h5>
-                <p class="card-text"><%= post.content %></p>
-                <% if (post.image && typeof post.image === 'string') { %>
-                    <img src="	http://localhost:5200/<%= post.image %>" alt="<%= post.image %>" style="width: 300px; height: 300px;">
-                <% } else { %>
-                    <p>No image available</p>
-                <% } %>
-                <p class="card-text">Posted on <%= post.createdAt.toDateString() %></p>
-            </div>
-        </div>
-    <% }); %>
-</div>
+    </div>
+</main>
 
 <%- include("../shared/_footer"); %>
