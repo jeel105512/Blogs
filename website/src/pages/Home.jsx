@@ -5,9 +5,13 @@ import React from "react";
  * Import CSS module for styling specific to this component.
  * This method scopes class names locally by default, avoiding
  * class name conflicts.
- */
+*/
 import styles from "./Home.module.css";
 import PageTitle from "../components/PageTitle";
+
+import PostsIndex from "../pages/Posts/Index";
+import AboutSection from "./About";
+import StageringGrid from "../components/StageringGrid/StageringGrid";
 
 // Define the Home component as a functional component
 const Home = () => {
@@ -20,11 +24,12 @@ const Home = () => {
          * <Fragment/> element if it doesn't make sense to return a normal HTML
          * element.
          */
-        <div className={`${styles.heroImage} d-flex align-items-center justify-content-center`}>
+        <>
             <PageTitle title="Home" />
-
-            <h1 className={`${styles.shadow} ${styles.title} text-white display-1 text-center`}>Resources Against Humanity</h1>
-        </div>
+            <StageringGrid />
+            <AboutSection />
+            <PostsIndex title="Blogs" />
+        </>
     );
 };
 
