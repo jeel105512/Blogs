@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 import Post from "./Post";
 import Comment from "./Comment";
+import RecentPosts from "./Index";
 import client from "../../../facade/utilities/CohereClient";
+import styles from "./Show.module.css";
 
 const Show = () => {
     axios.defaults.withCredentials = true;
@@ -141,10 +143,10 @@ const Show = () => {
     }
 
     return (
-        <div className="container">
-            <PageTitle title="Post" />
-            <h1>Post</h1>
-            <hr className="my-3" />
+        <div className={`${styles["comments-section"]} text-white`}>
+            <div className={styles["blog-post-container"]}>
+                <PageTitle title="Post" />
+            </div>
             <Post post={post} />
             {/* Display generated comment */}
             {generatedComment && (
@@ -152,7 +154,7 @@ const Show = () => {
                     <strong>Improved Comment:</strong> {generatedComment}
                 </div>
             )}
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <textarea
                         className="form-control"
@@ -164,8 +166,21 @@ const Show = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Comment</button>
                 <button className="btn btn-primary" onClick={(e) => cohere(e, content)}>Improve Comment</button>
+            </form> */}
+            <form onSubmit={handleSubmit}>
+                <textarea
+                    class={styles["comment-textarea"]}
+                    id="content"
+                    value={content}
+                    placeholder="Comment . . ."
+                    onChange={(e) => setContent(e.target.value)}>
+                </textarea>
+                <div class={styles["comments-section-buttons"]}>
+                    <button type="submit" class={styles["comment-button"]}>Comment</button>
+                    <button class={styles["improve-comment-button"]} onClick={(e) => cohere(e, content)}>Improve Comment</button>
+                </div>
             </form>
-            <ul>
+            <div class={styles["comment-section-comments"]}>
                 {comments.map((comment) => (
                     <Comment
                         key={comment._id}
@@ -182,7 +197,8 @@ const Show = () => {
                         cohere={cohere}
                     />
                 ))}
-            </ul>
+            </div>
+            <RecentPosts title={"Recent Posts"}/>
         </div>
     );
 }
