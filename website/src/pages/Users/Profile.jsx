@@ -26,7 +26,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container text-white">
             <PageTitle title="Profile" />
             <h1>Profile</h1>
             {user.firstName ? <h2>{`Hello, ${user.firstName} ${user.lastName}!`}</h2> : null}

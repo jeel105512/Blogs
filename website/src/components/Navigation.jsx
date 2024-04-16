@@ -8,14 +8,10 @@ const Navigation = () => {
 
     const pageLinks = [
         { label: "Home", link: "/" },
-        { label: "About", link: "/about" },
-        { label: "Contact", link: "/contact" },
         { label: "Posts", link: "/posts" },
         // Conditionally render these based on user's login status
         ...(user
             ? [
-                  { label: "Resources", link: "/resources" },
-                  { label: "Create Resource", link: "/resources/create" },
                   { label: "Profile", link: `/profile` },
                   { label: "Logout", link: "/logout" },
               ]
@@ -26,15 +22,15 @@ const Navigation = () => {
     ];
 
     return (
-        <nav className={`navbar navbar-expand-lg ${styles.navbar}`}>
+        <nav className={`navbar navbar-expand-lg navbar-dark bg-dark ${styles.navbar}`}>
             <div className="container-fluid">
-                <Link className={`navbar-brand text-white ${styles.brand}`} to="/">
-                    MyApp
+                <Link className={`navbar-brand ${styles.brand}`} to="/">
+                    Jeel Blogs
                 </Link>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     {pageLinks.map(({ label, link }, index) => (
                         <li className="nav-item" key={index}>
-                            <Link className={`nav-link ${styles.navLink}`} to={link}>
+                            <Link className={`nav-link`} to={link}>
                                 {label}
                             </Link>
                         </li>

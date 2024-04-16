@@ -11,13 +11,13 @@ export const useAuth = () => useContext(AuthContext);
 // Lazy load the components
 import HomePage from "./pages/Home";
 import Cookies from "js-cookie";
-const AboutPage = lazy(() => import("./pages/About"));
-const ContactPage = lazy(() => import("./pages/Contact"));
-const ResourcesPage = lazy(() => import("./pages/Resources/Index"));
-const ResourcePage = lazy(() => import("./pages/Resources/Show"));
-const ResourceCreatePage = lazy(() => import("./pages/Resources/Create"));
-const ResourceEditPage = lazy(() => import("./pages/Resources/Update"));
-const ResourceDeletePage = lazy(() => import("./pages/Resources/Delete"));
+// const AboutPage = lazy(() => import("./pages/About"));
+// const ContactPage = lazy(() => import("./pages/Contact"));
+// const ResourcesPage = lazy(() => import("./pages/Resources/Index"));
+// const ResourcePage = lazy(() => import("./pages/Resources/Show"));
+// const ResourceCreatePage = lazy(() => import("./pages/Resources/Create"));
+// const ResourceEditPage = lazy(() => import("./pages/Resources/Update"));
+// const ResourceDeletePage = lazy(() => import("./pages/Resources/Delete"));
 const RegisterPage = lazy(() => import("./pages/Users/Register"));
 const LoginPage = lazy(() => import("./pages/Users/Login"));
 const ProfilePage = lazy(() => import("./pages/Users/Profile"));
@@ -58,13 +58,13 @@ const App = () => {
                     {" "}
                     <Routes>
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/about" element={<AboutPage />} />
+                        {/* <Route path="/about" element={<AboutPage />} />
                         <Route path="/contact" element={<ContactPage />} />
                         <Route path="/resources" element={<ResourcesPage />} />
                         <Route path="/resources/:id" element={<ResourcePage />} />
                         <Route path="/resources/create" element={<ResourceCreatePage />} />
                         <Route path="/resources/:id/update" element={<ResourceEditPage />} />
-                        <Route path="/resources/:id/delete" element={<ResourceDeletePage />} />
+                        <Route path="/resources/:id/delete" element={<ResourceDeletePage />} /> */}
                         <Route path="/profile" element={<ProfilePage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/login" element={<LoginPage />} />

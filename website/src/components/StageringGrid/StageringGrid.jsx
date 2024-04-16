@@ -32,7 +32,7 @@ const StageringGrid = () => {
         };
 
         const handleOnClick = (index) => {
-            setToggled(!toggled);
+            setToggled(prevToggled => !prevToggled);
             const title = document.querySelector(`.${styles["home-header-title"]}`);
             if (title) {
                 title.classList.toggle(styles["home-header-title-display-block"]);
@@ -59,7 +59,7 @@ const StageringGrid = () => {
     return (
         <div className={styles["home-header"]}>
             <h1 className={styles["home-header-title"]}><span>Jeel</span> Blogs</h1>
-            <div id={styles["tiles"]}></div>
+            <div id={`${styles["tiles"]}`}></div>
         </div>
     );
 }

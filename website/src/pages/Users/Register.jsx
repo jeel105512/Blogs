@@ -22,7 +22,7 @@ const Register = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container text-white">
             <PageTitle title="Register" />
             <h1>Register</h1>
             <hr className="my-3" />
