@@ -12,6 +12,7 @@ import PageTitle from "../components/PageTitle";
 import PostsIndex from "../pages/Posts/Index";
 import AboutSection from "./About";
 import StageringGrid from "../components/StageringGrid/StageringGrid";
+import WaterDropGrid from "../components/WaterDropGrid/WaterDropGrid";
 
 // Define the Home component as a functional component
 const Home = () => {
@@ -26,7 +27,8 @@ const Home = () => {
          */
         <>
             <PageTitle title="Home" />
-            <StageringGrid />
+            {/* <StageringGrid /> */}
+            <WaterDropGrid />
             <AboutSection />
             <PostsIndex title="Blogs" />
         </>
