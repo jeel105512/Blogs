@@ -154,19 +154,6 @@ const Show = () => {
                     <strong>Improved Comment:</strong> {generatedComment}
                 </div>
             )}
-            {/* <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <textarea
-                        className="form-control"
-                        id="content"
-                        value={content}
-                        placeholder="Comment . . ."
-                        onChange={(e) => setContent(e.target.value)}
-                    ></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary">Comment</button>
-                <button className="btn btn-primary" onClick={(e) => cohere(e, content)}>Improve Comment</button>
-            </form> */}
             <form onSubmit={handleSubmit}>
                 <textarea
                     class={styles["comment-textarea"]}
@@ -198,7 +185,7 @@ const Show = () => {
                     />
                 ))}
             </div>
-            <RecentPosts title={"Recent Posts"}/>
+            <RecentPosts title={"Recent Posts"} />
         </div>
     );
 }
